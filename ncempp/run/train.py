@@ -6,9 +6,8 @@ import time
 
 import torch
 #from tqdm import tqdm
-# Hongyuan: I have to disable it because it is not MARCC-friendly, sorry
 
-from nce_point_process.run.manager import Manager
+from ncempp.run.manager import Manager
 
 #@profile
 def train(args):
@@ -189,10 +188,10 @@ def get_args():
 		choices=[ 
 			'mle', # MLE method
 			'lse', # least-square estimation
-			'nce_frac', 'nce_async', 'nce_sync', # ranking-based NCE
+			'nce_frac', 'nce_async', #'nce_sync', # ranking-based NCE
 			'nce_binary' # classification-based NCE
 		],
-		help='training method : mle or nce? for nce, frac or async or sync method? (frac and async are in paper)'
+		help='training method : mle or nce? for nce, frac or async method? (frac and async are in paper)'
 	)
 	parser.add_argument(
 		'-mc', '--MCSample', default=1, type=float,

@@ -7,7 +7,7 @@ import time
 import numpy
 import torch
 
-from nce_point_process.run.tester import Tester
+from ncempp.run.tester import Tester
 
 #@profile
 def test(args):
@@ -145,21 +145,9 @@ def aug_args_with_log(dict_args):
 	capsplit = dict_args['Split'][0].upper() + dict_args['Split'][1:]
 	dict_args[f"{capsplit}Ratio"] = dict_args['Ratio']
 
-	#folder_name = get_foldername(dict_args, id_process)
-	#print(folder_name)
-
 	path = os.path.join(root_path, 'logs', dict_args['Dataset'])
-	#path_log = os.path.join(path, folder_name)
-	#os.makedirs(path_log)
-
-	#file_log = os.path.join(path_log, 'log.txt')
-	#file_model = os.path.join(path_log, 'saved_model.pkl') 
-	# some sys may think a file with no extension is an executable : bad
-
-	#dict_args['PathLog'] = file_log
-	#dict_args['PathModel'] = file_model
+	
 	dict_args['PathSave'] = path
-	#dict_args['PathRun'] = path_log
 
 def main():
 

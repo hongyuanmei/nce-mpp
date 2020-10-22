@@ -7,7 +7,7 @@ import numpy
 import torch
 from tqdm import tqdm
 
-from nce_point_process.eval.draw import Drawer
+from ncempp.eval.draw import Drawer
 
 
 def draw_lc(args):

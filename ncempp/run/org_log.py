@@ -13,7 +13,7 @@ import os
 import datetime
 from itertools import chain
 
-from nce_point_process.io.log import LogBatchReader
+from ncempp.io.log import LogBatchReader
 
 import argparse
 __author__ = 'Hongyuan Mei'

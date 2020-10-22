@@ -7,7 +7,7 @@ import pickle
 
 import torch
 
-from nce_point_process.run.manager import Manager
+from ncempp.run.manager import Manager
 
 #@profile
 def gen(args):
@@ -89,14 +89,6 @@ def get_args():
 		'-c', '--Config', required=True, type=str,
 		help='name of config file used by model, e.g., onetoone'
 	)
-	# parser.add_argument(
-	# 	'-sbc', '--SizeBatchCompute', default=1, type=int,
-	# 	help='size of mini-batch (# seqs) to compute loss'
-	# )
-	# parser.add_argument(
-	# 	'-sbu', '--SizeBatchUpdate', default=1, type=int,
-	# 	help='size of mini-batch (# seqs) to update params---ideal : N x sbc'
-	# )
 	parser.add_argument(
 		'-ntoken', '--NumToken', default=10, type=int, 
 		help="# of tokens in each sequence"
@@ -121,52 +113,11 @@ def get_args():
 		'-tp', '--TrackPeriod', default=10, type=int,
 		help='# of sequences for each checkpoint'
 	)
-	# parser.add_argument(
-	# 	'-tr', '--TrainRatio', default=1.0, type=float, 
-	# 	help='ratio of training data to use for this run'
-	# )
-	# parser.add_argument(
-	# 	'-dr', '--DevRatio', default=1.0, type=float, 
-	# 	help='ratio of dev data to use for this run'
-	# )
-	# parser.add_argument(
-	# 	'-me', '--MaxEpoch', default=10, type=int,
-	# 	help='max # of epochs of training'
-	# )
-	# parser.add_argument(
-	# 	'-tm', '--TrainMethod', required=True, type=str, 
-	# 	choices=[ 'mle', 'nce_frac', 'nce_async', 'nce_sync' ],
-	# 	help='training method : mle or nce? for nce, frac or async or sync method? (frac and async are in paper)'
-	# )
-	# parser.add_argument(
-	# 	'-mc', '--MCSample', default=1, type=int,
-	# 	help='# of Monte-Carlo samples per actual event in MLE'
-	# )
-	# parser.add_argument(
-	# 	'-nf', '--NoiseFolder', type=str,
-	# 	help='folder name of saved noise model and log containing useful info like config file name'
-	# )
-	# parser.add_argument(
-	# 	'-np', '--NoiseProcess',default=1, type=int, 
-	# 	help='# of noise processes in parallel to sample noise times'
-	# )
-	# parser.add_argument(
-	# 	'-nt', '--NoiseType', default=1, type=int, 
-	# 	help='# of noise event types for each noise process'
-	# )
 	parser.add_argument(
 		'-nm', '--NoiseMode', type=str, 
 		default='multinomial', choices=['multinomial'], 
 		help='way to sample event types, must be multinomial for exact sampling '
 	)
-	# parser.add_argument(
-	# 	'-or', '--OverRate', default=10.0, type=float,
-	# 	help='over sampling rate in thinning algorithm'
-	# )
-	# parser.add_argument(
-	# 	'-lr', '--LearnRate', default=1e-3, type=float,
-	# 	help='(starting) learning rate of the training algorithm'
-	# )
 	parser.add_argument(
 		'-sd', '--Seed', default=12345, type=int,
 		help='random seed. e.g. 12345'
@@ -222,18 +173,10 @@ def get_foldername(dict_args, id_process):
 	"""
 	# format: [arg name, name used in path]
 	args_used_in_name = [
-		#['TrainMethod', 'meth'],
 		['Config', 'conf'],
-		#['MCSample', 'mc'], 
-		#['NoiseProcess', 'np'], 
-		#['NoiseType', 'nt'], 
 		['DimLSTM', 'dim'],
 		['UseGPU', 'gpu'], 
-		#['SizeBatchCompute', 'batchcomp'],
-		#['SizeBatchUpdate', 'batchupd'],
-		#['NoiseMode', 'nm'], 
 		['Seed', 'seed'],
-		#['LearnRate', 'lr'],
 	]
 	folder_name = list()
 	for arg_name, rename in args_used_in_name:

@@ -2,7 +2,7 @@ import os
 import csv
 import numpy
 
-from nce_point_process.io.log import LogReader
+from ncempp.io.log import LogReader
 import matplotlib.pyplot as plt
 #from scipy.interpolate import make_interp_spline, BSpline
 from scipy import interpolate

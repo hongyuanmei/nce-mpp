@@ -6,8 +6,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from nce_point_process.models.layers import CF, LinearEmbedding
-from nce_point_process.models.utils import sample_noise_types
+from ncempp.models.layers import CF, LinearEmbedding
+from ncempp.models.utils import sample_noise_types
 
 class GPP(nn.Module): 
 
@@ -356,113 +356,3 @@ class GPP(nn.Module):
 
 	def draw_next(self): 
 		raise NotImplementedError
-
-	# def draw_seq(self, num): 
-	# 	rst = []
-	# 	# use BOS to init
-	# 	k = self.idx_BOS
-	# 	dt = 0.0 
-	# 	c = self.init_c.unsqueeze(0).clone() # 1 x D
-	# 	cb = c.clone() # 1 x D
-	# 	d = c.clone()
-	# 	o = c.clone().fill_(1.0)
-	# 	for i in range(num): 
-	# 		# update using last event
-	# 		c, cb, d, o = self.update(k, dt, c, cb, d, o)
-	# 		# then draw the next event
-	# 		dt, k = self.draw_next(c, cb, d, o)
-	# 		rst.append((dt, k))
-	# 	return rst
-	
-	# def update(self, k, dt, c, cb, d, o): 
-	# 	"""
-	# 	k : event type (idx) (maybe BOS)
-	# 	dt : event dtime since last event (or init)
-	# 	c, cb, d, o : gates after LAST update (or init)
-	# 	"""
-	# 	event_tensor = torch.zeros(
-	# 		size=[1], dtype=torch.long, device=self.device).fill_(k)
-	# 	dtime_i = torch.zeros(
-	# 		size=[1], dtype=torch.float32, device=self.device).fill_(dt)
-	# 	emb_i = self.in_emb(event_tensor) # 1 x D
-
-	# 	c_t_minus, h_t_minus = self.rnn_cell.decay(c, cb, d, o, dtime_i)
-	# 	c, cb, d, o = self.rnn_cell(emb_i, h_t_minus, c_t_minus, cb)
-	# 	return c, cb, d, o
-
-	# def draw_next(self, c, cb, d, o): 
-	# 	"""
-	# 	draw next event dtime and type using thinning algorithm
-	# 	NOTE : different from the thinning method in this calss 
-	# 	that thinning : draw noise samples given h(t)
-	# 	this thinning : draw next event given h(t_i)
-	# 	there is similar code 
-	# 	but we decide to separate them to not mess up each other
-	# 	"""
-	# 	over = 10.0
-	# 	N = 500 
-	# 	"""
-	# 	find upper bound (a conservative estimate)
-	# 	"""
-	# 	coarse_inten = self.get_intensities_all_coarse_types(
-	# 		c, cb, d, o, 
-	# 		torch.zeros(size=[1], dtype=torch.float32, device=self.device)
-	# 	) # 1 x C
-	# 	total_coarse_inten = coarse_inten.sum() # 0
-	# 	sample_rate = total_coarse_inten * over # 0
-	# 	"""
-	# 	rejection sampling for next event dtime and type
-	# 	"""
-	# 	Exp_numbers = torch.empty(
-	# 		size=[1, N], dtype=torch.float32, device=self.device )
-	# 	Unif_numbers = torch.empty(
-	# 		size=[1, N], dtype=torch.float32, device=self.device )
-	# 	Exp_numbers.exponential_(1.0)
-	# 	sampled_dt = Exp_numbers / sample_rate
-	# 	sampled_dt = sampled_dt.cumsum(dim=-1) # 1 x N
-	# 	"""
-	# 	compute intensities at sampled times
-	# 	"""
-	# 	D = c.size(-1) # hidden dimension
-	# 	c_exp = c.unsqueeze(1).expand(1, N, D)
-	# 	cb_exp = cb.unsqueeze(1).expand(1, N, D)
-	# 	d_exp = d.unsqueeze(1).expand(1, N, D)
-	# 	o_exp = o.unsqueeze(1).expand(1, N, D)
-	# 	coarse_inten = self.get_intensities_all_coarse_types(
-	# 		c_exp, cb_exp, d_exp, o_exp, sampled_dt 
-	# 	) # 1 x N x C
-	# 	total_coarse_inten = coarse_inten.sum(-1) # 1 x N 
-	# 	accept_prob = total_coarse_inten / (sample_rate + self.eps)
-	# 	# 1 x N
-	# 	Unif_numbers.uniform_(0.0, 1.0)
-	# 	"""
-	# 	randomly accept
-	# 	"""
-	# 	accept_idx = Unif_numbers <= accept_prob # accept : 1 x ?
-	# 	accept_dt = sampled_dt[accept_idx] # ?
-	# 	#print()
-	# 	#print(accept_dt.size())
-	# 	accept_coarse_inten = coarse_inten[accept_idx, :] # ? x C
-	# 	#print(accept_coarse_inten.size())
-	# 	assert accept_idx.size(-1) > 0, "no accept?"
-	# 	dt, min_i = accept_dt.min(dim=-1) # 1 
-	# 	min_i = int(min_i.sum())
-	# 	dt = float(dt.sum())
-	# 	accept_coarse_inten = accept_coarse_inten[min_i, :] # C
-	# 	"""
-	# 	sample event type
-	# 	"""
-	# 	"""
-	# 	NOTE : most robust # of dimension is 3
-	# 	cuz that is for which coarse_to_fine is optimized
-	# 	"""
-	# 	accept_coarse_inten_exp = accept_coarse_inten.unsqueeze(0).unsqueeze(0)
-	# 	fine_inten = self.coarse_to_fine.get_fine_probs_all_types(
-	# 		accept_coarse_inten_exp ) # 1 x 1 x K
-	# 	#fine_inten = fine_inten.unsqueeze(0) # 1 x 1 x K
-	# 	"""
-	# 	continue 
-	# 	"""
-	# 	sampled_k = self.sample_noise_types(fine_inten, 1, 1, 1) # 1 x 1 x 1 
-	# 	sampled_k = int(sampled_k.sum())
-	# 	return dt, sampled_k

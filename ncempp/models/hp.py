@@ -6,8 +6,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from nce_point_process.models.layers import CF, LinearEmbedding
-from nce_point_process.models.utils import sample_noise_types
+from ncempp.models.layers import CF, LinearEmbedding
+from ncempp.models.utils import sample_noise_types
 
 class GHP(nn.Module): 
 

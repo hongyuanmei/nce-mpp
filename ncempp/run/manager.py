@@ -9,15 +9,15 @@ import psutil
 
 from torch import optim
 
-from nce_point_process.models.nhp import GNHP
-from nce_point_process.models.hp import GHP
-from nce_point_process.models.pp import GPP
-from nce_point_process.objectives.mle import MLE
-from nce_point_process.objectives.nce import NCE
-from nce_point_process.objectives.lse import LSE
-from nce_point_process.io.data import DataProcessor
-from nce_point_process.io.log import LogReader
-from nce_point_process.io.log import LogWriter
+from ncempp.models.nhp import GNHP
+from ncempp.models.hp import GHP
+from ncempp.models.pp import GPP
+from ncempp.objectives.mle import MLE
+from ncempp.objectives.nce import NCE
+from ncempp.objectives.lse import LSE
+from ncempp.io.data import DataProcessor
+from ncempp.io.log import LogReader
+from ncempp.io.log import LogWriter
 
 
 class Manager(object): 

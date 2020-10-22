@@ -1,9 +1,9 @@
 import setuptools
 from setuptools import setup
 
-setup(name='nce_point_process',
-      version='0.1',
-      description='nce for point processeses',
+setup(name='ncempp',
+      version='1.0',
+      description='noise-contrastive estimation for multivariate point process',
       packages=setuptools.find_packages(),
       zip_safe=False,
       install_requires=[

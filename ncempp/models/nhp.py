@@ -6,9 +6,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from nce_point_process.models.cont_time_cell import CTLSTMCell
-from nce_point_process.models.layers import CF, LinearEmbedding
-from nce_point_process.models.utils import draw_mc_samples, sample_noise_types
+from ncempp.models.cont_time_cell import CTLSTMCell
+from ncempp.models.layers import CF, LinearEmbedding
+from ncempp.models.utils import draw_mc_samples, sample_noise_types
 
 class GNHP(nn.Module): 
 
