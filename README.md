@@ -32,7 +32,7 @@ The datasets used in our experiments can be downloaded from this [Google Drive d
 
 Place the datasets into: 
 ```
-ncempp/data
+data
 ```
 
 ### Train Models
@@ -48,7 +48,7 @@ python train.py --help
 
 The training logs and model parameters are stored in this directory: 
 ```
-ncempp/logs/DATA_NAME/PARAMS
+logs/DATA_NAME/PARAMS
 ```
 
 ### Draw Curves
