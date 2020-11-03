@@ -1,5 +1,5 @@
 # Noise-Contrastive Estimation for Multivariate Point Processes
-Source code for [Noise-Contrastive Estimation for Multivariate Point Processes (NeurIPS 2020)](http://www.cs.jhu.edu/~hmei/).
+Source code for [Noise-Contrastive Estimation for Multivariate Point Processes (NeurIPS 2020)](https://arxiv.org/abs/2011.00717).
 
 ## Reference
 If you use this code as part of any published research, please acknowledge the following paper (it encourages researchers who publish their code!):
